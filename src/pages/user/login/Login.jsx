@@ -1,3 +1,4 @@
+import "./Login.css";
 import { Fragment, useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -9,14 +10,7 @@ import user from "../../../services/user";
 import useAutoLogin from "../../../hooks/useAutoLogin";
 import validate from "../../../validation/validation";
 import loginSchema from "../../../validation/login.validation";
-import {
-  auth,
-  signInWithGooglePopup,
-  createUserDocFromAuth,
-  signInWithGoogleRedirect,
-} from "../../../utils/firebase/firebase.utils";
 
-import { getRedirectResult } from "firebase/auth";
 //====================================================
 
 const Login = () => {
@@ -91,69 +85,69 @@ const Login = () => {
     return errors;
   };
   //===============================================
-  useEffect(() => {
-    (async () => {
-      const response = await getRedirectResult(auth);
-      //console.log("response", response);
-      if (response) {
-        const userDocRef = await createUserDocFromAuth(response.user);
-      }
-    })();
-  }, []);
 
-  //sign-in with google popup
-  const logGoogleUser = async () => {
-    //console.log("here");
-    const { user } = await signInWithGooglePopup();
-
-    const userDocRef = await createUserDocFromAuth(user);
-    //console.log("userDocRef from login", userDocRef);
-  };
-
-  return (
-    <div className="container">
-      {Object.keys(formErrors).length === 0 && isSubmit ? (
+  {
+    /* {Object.keys(formErrors).length === 0 && isSubmit ? (
         <div className="ui message succsess">logined in successfully</div>
       ) : (
         <pre>{JSON.stringify(userInput, undefined, 2)}</pre>
-      )}
-      <form onSubmit={handleSubmitLogin}>
-        <h1>Login</h1>
-        {/* --------------------------- */}
+      )} */
+  }
 
-        <div className="form-floating mb-3">
-          <input
-            type="email"
-            className="form-control"
-            id="email"
-            placeholder="name@example.com"
-            value={userInput.email}
-            onChange={handleUserInputChange}
-          />
-          <label htmlFor="email">Email address</label>
+  return (
+    <div className="container1">
+      <div className="screen">
+        <div className="screen__content">
+          <form className="login" onSubmit={handleSubmitLogin}>
+            <h1>Login</h1>
+            {/* --------------------------- */}
+
+            <div className="login__field">
+            <i className="login__icon fas fa-user" />
+              
+                <input
+                  type="email"
+                  className="login__input"
+                  id="email"
+                  placeholder="name@example.com"
+                  value={userInput.email}
+                  onChange={handleUserInputChange}
+                />
+                
+              <p className="text-danger">{formErrors.email}</p>
+            </div>
+            <div className="login__field">
+              <i className="login__icon fas fa-lock" />
+            
+                <input
+                  type="password"
+                  className="login__input"
+                  id="password"
+                  placeholder="password"
+                  value={userInput.password}
+                  onChange={handleUserInputChange}
+                />
+             
+              <p className="text-danger">{formErrors.password}</p>
+            </div>
+
+            <button
+              type="submit"
+              className="button login__submit"
+              disabled={btnSub}
+            >
+              <span className="button__text">Log In Now</span>
+              <i className="button__icon fas fa-chevron-right" />
+            </button>
+          </form>
         </div>
-        <p className="text-danger">{formErrors.email}</p>
-
-        <div className="form-floating mb-3">
-          <input
-            type="password"
-            className="form-control"
-            id="password"
-            placeholder="password"
-            value={userInput.password}
-            onChange={handleUserInputChange}
-          />
-          <label htmlFor="password">password</label>
+        <div className="screen__background">
+          <span className="screen__background__shape screen__background__shape4" />
+          <span className="screen__background__shape screen__background__shape3" />
+          <span className="screen__background__shape screen__background__shape2" />
+          <span className="screen__background__shape screen__background__shape1" />
         </div>
-        <p className="text-danger">{formErrors.password}</p>
-
-        <button type="submit" className="btn btn-primary" disabled={btnSub}>
-          Submit
-        </button>
-
-        <button onClick={logGoogleUser}>signIn with Google</button>
-        <button onClick={signInWithGoogleRedirect}>signIn with Redirect</button>
-      </form>
+      </div>
     </div>
   );
 };

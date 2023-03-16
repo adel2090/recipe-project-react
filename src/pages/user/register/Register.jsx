@@ -1,3 +1,4 @@
+import "./Register.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -26,13 +27,13 @@ const Register = () => {
     setUserInput(copyUserInput);
   };
 
-  const handleCheckBoxInputChange=(ev)=>{
+  const handleCheckBoxInputChange = (ev) => {
     let copyUserInput = JSON.parse(JSON.stringify(userInput));
-    if(copyUserInput.hasOwnProperty(ev.target.id)){
+    if (copyUserInput.hasOwnProperty(ev.target.id)) {
       copyUserInput[ev.target.id] = ev.target.checked;
       setUserInput(copyUserInput);
     }
-  }
+  };
 
   const handleSubmitRegister = (ev) => {
     ev.preventDefault();
@@ -96,78 +97,102 @@ const Register = () => {
     }
     return errors;
   };
-
-  return (
-    <div className="container">
-      {Object.keys(formErrors).length === 0 && isSubmit ? (
+  {
+    /* {Object.keys(formErrors).length === 0 && isSubmit ? (
         <div className="ui message succsess">Signed in successfully</div>
       ) : (
         <pre>{JSON.stringify(userInput, undefined, 2)}</pre>
-      )}
-      <form onSubmit={handleSubmitRegister}>
-        <h1>Register</h1>
+      )} */
+  }
+  return (
+    <div className="container_register">
+      <div className="screen_register">
+        <div className="screen__content_register">
+          <form className="register" onSubmit={handleSubmitRegister}>
+            <h1>Register</h1>
 
-        {/* --------------------------- */}
-        <div className="form-floating mb-3">
-          <input
-            type="text"
-            className="form-control"
-            id="name"
-            placeholder="name"
-            value={userInput.name}
-            onChange={handleUserInputChange}
-            required
-          />
-          <label htmlFor="name">UserName</label>
-        </div>
-        <p className="text-danger">{formErrors.name}</p>
+            {/* --------------------------- */}
+            <div className="register__field">
+              <i className="register__icon fas fa-user" />
 
-        <div className="form-floating mb-3">
-          <input
-            type="text"
-            className="form-control"
-            id="email"
-            placeholder="name@example.com"
-            value={userInput.email}
-            onChange={handleUserInputChange}
-            required
-          />
-          <label htmlFor="email">Email address</label>
-        </div>
-        <p className="text-danger">{formErrors.email}</p>
+              <input
+                type="text"
+                className="register__input"
+                id="name"
+                placeholder="name"
+                value={userInput.name}
+                onChange={handleUserInputChange}
+                required
+              />
 
-        <div className="form-floating mb-3">
-          <input
-            type="password"
-            className="form-control"
-            id="password"
-            placeholder="password"
-            value={userInput.password}
-            onChange={handleUserInputChange}
-            required
-          />
-          <label htmlFor="password">password</label>
-        </div>
-        <p className="text-danger">{formErrors.password}</p>
+              <p className="text-danger">{formErrors.name}</p>
+            </div>
 
-        <div className="form-check mb-3">
-        <input
-          className="form-check-input"
-          type="checkbox"
-          value=""
-          id="isChef"
-          checked={userInput.isChef}
-          onChange={handleCheckBoxInputChange}
-        />
-        <label className="form-check-label" htmlFor="isChef">
-          Are you chef?
-        </label>
-      </div>
+            <div className="register__field">
+              <i className="register__icon fas fa-user" />
+              
+                <input
+                  type="text"
+                  className="register__input"
+                  id="email"
+                  placeholder="name@example.com"
+                  value={userInput.email}
+                  onChange={handleUserInputChange}
+                  required
+                />
+              
+              <p className="text-danger">{formErrors.email}</p>
+            </div>
 
-        <button type="submit" className="btn btn-primary">
+            <div className="register__field">
+              <i className="register__icon fas fa-user" />
+              
+                <input
+                  type="password"
+                  className="register__input"
+                  id="password"
+                  placeholder="password"
+                  value={userInput.password}
+                  onChange={handleUserInputChange}
+                  required
+                />
+             
+              <p className="text-danger">{formErrors.password}</p>
+            </div>
+
+            <div className="register__field">
+              <i className="register__icon fas fa-user" />
+              <div className="form-check mb-3">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="isChef"
+                  checked={userInput.isChef}
+                  onChange={handleCheckBoxInputChange}
+                />
+                <label className="form-check-label" htmlFor="isChef">
+                  Are you chef?
+                </label>
+              </div>
+            </div>
+
+            <button type="submit" className="button register__submit">
+              <span className="button__text">Register</span>
+              <i className="button__icon fas fa-chevron-right" />
+            </button>
+            {/* <button type="submit" className="btn btn-primary">
           Submit
-        </button>
-      </form>
+        </button> */}
+          </form>
+        </div>
+        <div className="screen__background_register">
+          <span className="screen__background__shape_register screen__background__shape4_register" />
+          <span className="screen__background__shape_register screen__background__shape3_register" />
+          <span className="screen__background__shape_register screen__background__shape2_register" />
+          <span className="screen__background__shape_register screen__background__shape1_register" />
+        </div>
+      </div>
     </div>
   );
 };

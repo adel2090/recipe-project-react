@@ -12,6 +12,7 @@ const useAutoLogin = () => {
     try {
       let { data } = await user(); // userInfo
       let dataFromToken = jwt_decode(token);
+      localStorage.setItem("userId", data._id);
       if (data ) {
         dispatch(authAction.login(dataFromToken));
         dispatch(authAction.updateUserInfo(data));

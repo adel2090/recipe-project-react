@@ -24,9 +24,7 @@ let recipeArray = [];
 const MyRecipe = () => {
 
   const userData = useSelector((state) => state.auth.userData);
-  useEffect(()=>{
-    console.log("userData.id",userData.id);
-  },[userData])
+ 
   //console.log("userData",userData.id);
  
 

@@ -16,12 +16,14 @@ import {
 
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Favorite from "./favourites/Favorite";
 //==============================================================================
 const RecipePage = () => {
   const logIn = useSelector((state) => state.auth.logIn);
-  const userData=useSelector(state=>state.auth.userData);
-  console.log("userData",userData);
-  //const loggin = useSelector((state) => state.auth.logIn);
+  const userData = useSelector((state) => state.auth.userData);
+  const userInfo = useSelector((state) => state.auth.userInfo);
+  // console.log("userData",userData);
+
   const [recipe, setRecipe] = useState(null);
 
   let { id } = useParams();
@@ -30,7 +32,7 @@ const RecipePage = () => {
     (async () => {
       try {
         let { data } = await getRecipe(`${id}`);
-        console.log("data from getRecipe",{data});
+        console.log("data from getRecipe", { data });
         setRecipe(data);
       } catch (error) {
         toast.error("Recipe page is failed", {
@@ -79,7 +81,19 @@ const RecipePage = () => {
           <p>{recipe.recipeIngredients}</p>
           <p>{recipe.recipePreparation}</p>
 
-          {userData.id===recipe.user_id ? (
+          {/* favorite ***************************************
+          {logIn && <div style={{ width: "85%", margin: "1rem auto" }}>
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+              <Favorite
+                userForm={localStorage.getItem('userId')}
+                recipeId={recipe.id}
+                recipeInfo={recipe}
+              />
+            </div>
+          </div>} */}
+          
+
+          {localStorage.getItem('userId') === recipe.user_id ? (
             <Link
               to={`/editrecipe/${recipe._id}`}
               className="btn btn-warning ms-2"

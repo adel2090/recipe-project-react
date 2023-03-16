@@ -11,13 +11,19 @@ import ForgotPassword from "./pages/user/forgotPassword/ForgotPassword";
 import ResetPassword from "./pages/user/resetPassword/ResetPassword";
 import useAutoLogin from "./hooks/useAutoLogin";
 import AppRecipes from "./components/appRecipes/AppRecipes";
-import Favourites from "./pages/recipe/favourites/Favourites";
+
 import CreateRecipe from "./pages/recipe/CreateRecipe";
 import { editRecipe } from "./services/recipe.services";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import EditRecipe from "./pages/recipe/EditRecipe";
 import MyRecipe from "./pages/recipe/MyRecipe";
 import RecipePage from "./pages/recipe/RecipePage";
+
+import FavoritePage from "./pages/recipe/favourites/FavoritePage";
+
+import { ToastContainer } from "react-toastify";
+import Footer from "./components/footer/Footer";
+
 
 //======================================================================
 const App = () => {
@@ -33,6 +39,7 @@ const App = () => {
   return (
     <div className="container">
       <Navigation />
+      <ToastContainer />
       <Switch>
         <Route path="/" exact component={Home}></Route>
         <Route path="/aboutus" component={AboutUs}></Route>
@@ -41,14 +48,14 @@ const App = () => {
         <Route path="/forgotpassword" component={ForgotPassword}></Route>
         <Route path="/resetpassword/:token" component={ResetPassword}></Route>
         <Route path="/appRecipes" component={AppRecipes} />
-        <Route path="/createrecipe" component={CreateRecipe} />
-
-        <Route path="/editrecipe/:id" component={EditRecipe} />
-
-        <Route path="/favourites" component={Favourites} />
+        <ProtectedRoute path="/createrecipe" component={CreateRecipe} />
+        <ProtectedRoute path="/editrecipe/:id" component={EditRecipe} />
+        <Route path="/favorite" component={FavoritePage} />
         <Route path="/recipePage/:id" component={RecipePage} />
         <Route path="/myRecipe" component={MyRecipe} />
+        
       </Switch>
+      <Footer/>
     </div>
   );
 };

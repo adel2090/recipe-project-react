@@ -22,8 +22,8 @@ const links = [
     url: "/appRecipes",
   },
   {
-    label: "Favourites",
-    url: "/favourites",
+    label: "favorite",
+    url: "/favorite",
   },
 
 ];

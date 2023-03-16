@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialAuthState = {
   logIn: false,
+  isAdmin: false,
   userData:null,
   userInfo:null,
 };
@@ -13,7 +14,7 @@ const authSlice = createSlice({
   reducers: {
     login(state,action) {
       state.logIn = true;
-      console.log("logIn",state.logIn);
+      state.isAdmin = action.payload.isAdmin;
       state.userData=action.payload; // jwt-token
     },
 

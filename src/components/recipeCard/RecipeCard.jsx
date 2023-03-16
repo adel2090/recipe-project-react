@@ -33,20 +33,7 @@ const RecipeCard = ({
         <div className="header">
           <img src={img} className="card-img-top" alt={alt} />
           <div className="icon">
-            <button
-              onClick={hanldeSaveOnClick}
-              //onClick={()=>props.handleFavouritesClick(movie)}
-            >
-              <FontAwesomeIcon
-                icon={faHeart}
-                className="icon-heart"
-                style={{
-                  backgroundColor: isActive ? "salmon" : "blue",
-                  color: isActive ? "white" : "",
-                }}
-              />
-            </button>
-
+          
             {/* <a href="#">
               <FontAwesomeIcon icon={faHeart} className="icon-heart" />
               <i className="fa fa-heart-o" />

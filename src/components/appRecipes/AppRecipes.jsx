@@ -4,6 +4,7 @@ import RecipeList1 from "../../pages/recipe/recipesList/RecipeList1";
 import RecipeHeading from "../common/RecipeHeading";
 import SearchBox from "../common/SearchBox";
 import axios from "axios";
+
 //===========================================================
 //let recipesData = [];
 // const recipesArr = [
@@ -94,6 +95,9 @@ import axios from "axios";
 // ];
 let recipesData = [];
 const AppRecipes = () => {
+
+ 
+
   const [recipes, setRecipes] = useState(recipesData);
   const [searchValue, setSearchValue] = useState("");
   const [favourites, setFavourites] = useState([]);
@@ -115,7 +119,9 @@ const AppRecipes = () => {
   useEffect(() => {
     const regex = new RegExp(searchValue, "i");
     let copyRecipesData = JSON.parse(JSON.stringify(recipesData));
-    copyRecipesData = copyRecipesData.filter((item) => regex.test(item.recipeTitle));
+    copyRecipesData = copyRecipesData.filter((item) =>
+      regex.test(item.recipeTitle)
+    );
     setRecipes(copyRecipesData);
   }, [searchValue]);
 
@@ -149,6 +155,8 @@ const AppRecipes = () => {
 
   return (
     <div className="container recipe-app">
+     
+
       <div className="row d-flex align-items-center mt-4 mb-4">
         <RecipeHeading heading="Recipes" />
         <SearchBox searchValue={searchValue} setSearchValue={setSearchValue} />
@@ -160,7 +168,6 @@ const AppRecipes = () => {
           handleFavouritesClick={addFavouritesMovie}
         />
       </div>
-
 
       {/* ==============favourites=================== */}
       {/* <div>
