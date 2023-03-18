@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
+import validate from "../../../validation/validation";
+import registerSchema from "../../../validation/register.validation";
+
 //=======================================================
 
 const Register = () => {
@@ -16,14 +19,14 @@ const Register = () => {
   });
 
   const [formErrors, setFormErrors] = useState({});
-  const [isSubmit, setIsSubmit] = useState(false);
+ 
 
   const handleUserInputChange = (ev) => {
     //deep copy
     let copyUserInput = JSON.parse(JSON.stringify(userInput));
-    const { id, value } = ev.target;
-    copyUserInput[id] = value;
-    //copyUserInput[ev.target.id] = ev.target.value;
+    // const { id, value } = ev.target;
+    // copyUserInput[id] = value;
+    copyUserInput[ev.target.id] = ev.target.value;
     setUserInput(copyUserInput);
   };
 
@@ -37,8 +40,9 @@ const Register = () => {
 
   const handleSubmitRegister = (ev) => {
     ev.preventDefault();
-    setFormErrors(validate(userInput));
-    setIsSubmit(true);
+    const { error } = validate(userInput, registerSchema);
+    setFormErrors(validateError(userInput));
+    
     //post api
     axios
       .post("/users/register", userInput)
@@ -69,16 +73,10 @@ const Register = () => {
       });
   };
 
-  useEffect(() => {
-    console.log(formErrors);
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(userInput);
-    }
-  }, [formErrors]);
+  
 
-  const validate = (values) => {
+  const validateError = (values) => {
     const errors = {};
-    //const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
     if (!values.name) {
       errors.name = "UserName is requried!";
@@ -97,19 +95,13 @@ const Register = () => {
     }
     return errors;
   };
-  {
-    /* {Object.keys(formErrors).length === 0 && isSubmit ? (
-        <div className="ui message succsess">Signed in successfully</div>
-      ) : (
-        <pre>{JSON.stringify(userInput, undefined, 2)}</pre>
-      )} */
-  }
+
   return (
     <div className="container_register">
       <div className="screen_register">
         <div className="screen__content_register">
           <form className="register" onSubmit={handleSubmitRegister}>
-            <h1>Register</h1>
+            
 
             {/* --------------------------- */}
             <div className="register__field">
@@ -122,7 +114,7 @@ const Register = () => {
                 placeholder="name"
                 value={userInput.name}
                 onChange={handleUserInputChange}
-                required
+                
               />
 
               <p className="text-danger">{formErrors.name}</p>
@@ -138,7 +130,7 @@ const Register = () => {
                   placeholder="name@example.com"
                   value={userInput.email}
                   onChange={handleUserInputChange}
-                  required
+                  
                 />
               
               <p className="text-danger">{formErrors.email}</p>
@@ -154,7 +146,7 @@ const Register = () => {
                   placeholder="password"
                   value={userInput.password}
                   onChange={handleUserInputChange}
-                  required
+                 
                 />
              
               <p className="text-danger">{formErrors.password}</p>
@@ -181,9 +173,7 @@ const Register = () => {
               <span className="button__text">Register</span>
               <i className="button__icon fas fa-chevron-right" />
             </button>
-            {/* <button type="submit" className="btn btn-primary">
-          Submit
-        </button> */}
+       
           </form>
         </div>
         <div className="screen__background_register">

@@ -14,7 +14,7 @@ import Joi from "joi-browser";
 
  */
 const recipeSchema = {
-  //   _id: Joi.string(),
+  
   recipeTitle: Joi.string().min(2).max(255).required(),
   recipeImg: Joi.string()
     .regex(/^http(s?)\:\/\/(\.?)/)

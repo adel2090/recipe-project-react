@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import user from "../services/user";
 import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
@@ -13,15 +12,14 @@ const useAutoLogin = () => {
       let { data } = await user(); // userInfo
       let dataFromToken = jwt_decode(token);
       localStorage.setItem("userId", data._id);
-      if (data ) {
+      if (data) {
         dispatch(authAction.login(dataFromToken));
         dispatch(authAction.updateUserInfo(data));
-        return true;
+        //return true;
       }
-      
+      dispatch(authAction.Loading(false));
     } catch (error) {
-      //console.log("you not loggin");
-      return false;
+      dispatch(authAction.Loading(false));
     }
   };
 

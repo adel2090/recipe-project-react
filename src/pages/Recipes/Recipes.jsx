@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-// import RecipeList from "../../pages/recipesList/RecipeList";
-import RecipeList1 from "../../pages/recipe/recipesList/RecipeList1";
-import RecipeHeading from "../common/RecipeHeading";
-import SearchBox from "../common/SearchBox";
+
+import RecipeHeading from "../../components/common/RecipeHeading";
+import SearchBox from "../../components/common/SearchBox";
 import axios from "axios";
+import RecipeList from "../recipe/recipesList/RecipeList";
 
 //===========================================================
 //let recipesData = [];
@@ -94,13 +94,9 @@ import axios from "axios";
 //   },
 // ];
 let recipesData = [];
-const AppRecipes = () => {
-
- 
-
+const Recipes = () => {
   const [recipes, setRecipes] = useState(recipesData);
   const [searchValue, setSearchValue] = useState("");
-  const [favourites, setFavourites] = useState([]);
 
   //===============get data====================================
   useEffect(() => {
@@ -124,63 +120,20 @@ const AppRecipes = () => {
     );
     setRecipes(copyRecipesData);
   }, [searchValue]);
-
-  //=============== local storage=======================
-  // useEffect(() => {
-  //   const recipesFavourite = JSON.parse(
-  //     localStorage.getItem("recipe-app-favourites")
-  //   );
-  //   setFavourites(recipesFavourite);
-  // }, []);
-
-  const saveToLocalStorage = (items) => {
-    localStorage.setItem("recipe-app-favourites", JSON.stringify(items));
-  };
-
-  //===============add to favourite===========================
-  const addFavouritesMovie = (recipe) => {
-    const newFavouritesList = [...favourites, recipe];
-    setFavourites(newFavouritesList);
-    saveToLocalStorage(newFavouritesList);
-  };
-
-  //======================remove from favourite=======================
-  // const removeFavouritesMovie = (recipe) => {
-  //   const newFavouritesList = favourites.filter(
-  //     (item) => item.id !== recipe.id
-  //   );
-  //   setFavourites(newFavouritesList);
-  //   saveToLocalStorage(newFavouritesList);
-  // };
+  //===========================================================
 
   return (
-    <div className="container recipe-app">
-     
-
-      <div className="row d-flex align-items-center mt-4 mb-4">
+    <div className="">
+      <div >
         <RecipeHeading heading="Recipes" />
         <SearchBox searchValue={searchValue} setSearchValue={setSearchValue} />
       </div>
 
       <div>
-        <RecipeList1
-          recipes={recipes}
-          handleFavouritesClick={addFavouritesMovie}
-        />
+        <RecipeList recipes={recipes} />
       </div>
-
-      {/* ==============favourites=================== */}
-      {/* <div>
-        <RecipeHeading heading="Favourites" />
-      </div>
-      <div>
-        <RecipeList
-          recipes={favourites}
-          handleFavouritesClick={removeFavouritesMovie}
-        />
-      </div> */}
     </div>
   );
 };
 
-export default AppRecipes;
+export default Recipes;

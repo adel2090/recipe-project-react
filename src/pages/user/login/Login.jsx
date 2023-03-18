@@ -4,9 +4,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { authAction } from "../../../store/auth";
-import jwt_decode from "jwt-decode";
-import user from "../../../services/user";
 import useAutoLogin from "../../../hooks/useAutoLogin";
 import validate from "../../../validation/validation";
 import loginSchema from "../../../validation/login.validation";
@@ -14,15 +11,14 @@ import loginSchema from "../../../validation/login.validation";
 //====================================================
 
 const Login = () => {
+
   const history = useHistory();
-  const dispatch = useDispatch();
+ 
   const autoLoginFunction = useAutoLogin();
 
   const [userInput, setUserInput] = useState({ email: "", password: "" });
   const [formErrors, setFormErrors] = useState({});
-  const [isSubmit, setIsSubmit] = useState(false);
-  const [btnSub, setBtnSub] = useState(false);
-
+ 
   const handleUserInputChange = (event) => {
     const copyUserInput = JSON.parse(JSON.stringify(userInput));
     copyUserInput[event.target.id] = event.target.value;
@@ -32,18 +28,15 @@ const Login = () => {
   const handleSubmitLogin = (event) => {
     event.preventDefault();
     const { error } = validate(userInput, loginSchema);
-    //console.log("error", error);
     setFormErrors(validateError(userInput));
-    setIsSubmit(true);
+   
     //post api
     axios
       .post("/users/login", userInput)
       .then(async (res) => {
-        //console.log("jwt", jwt_decode(res.data.token));
-        //console.log(res);
         localStorage.setItem("token", res.data.token);
         autoLoginFunction(res.data.token);
-        history.push("/");
+        history.push("/recipes");
       })
       .catch((err) => {
         toast.error("register is failed", {
@@ -59,13 +52,7 @@ const Login = () => {
       });
   };
 
-  useEffect(() => {
-    //console.log(formErrors);
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      //console.log(userInput);
-      //setBtnSub(true);
-    }
-  }, [formErrors]);
+  
 
   const validateError = (values) => {
     const errors = {};
@@ -86,20 +73,12 @@ const Login = () => {
   };
   //===============================================
 
-  {
-    /* {Object.keys(formErrors).length === 0 && isSubmit ? (
-        <div className="ui message succsess">logined in successfully</div>
-      ) : (
-        <pre>{JSON.stringify(userInput, undefined, 2)}</pre>
-      )} */
-  }
-
   return (
     <div className="container1">
       <div className="screen">
         <div className="screen__content">
           <form className="login" onSubmit={handleSubmitLogin}>
-            <h1>Login</h1>
+          
             {/* --------------------------- */}
 
             <div className="login__field">
@@ -134,7 +113,7 @@ const Login = () => {
             <button
               type="submit"
               className="button login__submit"
-              disabled={btnSub}
+            
             >
               <span className="button__text">Log In Now</span>
               <i className="button__icon fas fa-chevron-right" />

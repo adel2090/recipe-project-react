@@ -1,32 +1,18 @@
 import React, { Fragment } from "react";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { getMyRecipe } from "../../services/recipe.services";
 import { toast } from "react-toastify";
-import RecipeCard1 from "../../components/recipeCard/RecipeCard1";
-import RecipeList1 from "./recipesList/RecipeList1";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faClock,
-  faUsers,
-  faStar,
-  faHeart,
-  faTrashCan,
   faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
-
+import RecipeList from "./recipesList/RecipeList";
 
 //================================================================
 let recipeArray = [];
 
 const MyRecipe = () => {
-
-  const userData = useSelector((state) => state.auth.userData);
- 
-  //console.log("userData",userData.id);
- 
 
   const [recipe, setRecipe] = useState(recipeArray);
 
@@ -34,10 +20,8 @@ const MyRecipe = () => {
     (async () => {
       try {
         let { data } = await getMyRecipe();
-        //console.log(data);
         recipeArray = data;
         setRecipe(data);
-        
       } catch (error) {
         toast.error("Recipe page is failed", {
           position: "top-center",
@@ -53,15 +37,17 @@ const MyRecipe = () => {
     })();
   }, []);
 
-  // return recipe && <RecipeCard1 recipe={recipe} />;
+  
   return (
     recipe && (
       <Fragment>
-          <Link to={`/createrecipe`} className="btn btn-warning ms-2">
+        <h1>MyRecipe</h1>
+        
+        <Link to={`/createrecipe`} className="btn btn-warning ms-2">
           <FontAwesomeIcon icon={faPenToSquare} />
           create recipe
-        </Link> 
-        <RecipeList1 recipes={recipe} />;
+        </Link>
+        <RecipeList recipes={recipe} />;
       </Fragment>
     )
   );

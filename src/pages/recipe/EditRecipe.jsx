@@ -86,7 +86,7 @@ const EditRecipe = () => {
       console.log("massage error type:", massageError);
     }
     try {
-      let { data } = await editRecipe(recipeData,`${id}`);
+      await editRecipe(recipeData,`${id}`);
       toast.success("The recipe is Update!", {
         position: "top-center",
         autoClose: 5000,
@@ -97,7 +97,7 @@ const EditRecipe = () => {
         progress: undefined,
         theme: "colored",
       });
-      history.push("/myrecipe");
+      history.push("/myRecipe");
     } catch (error) {
       toast.error("Update Recipe is failed", {
         position: "top-center",
@@ -224,7 +224,7 @@ const EditRecipe = () => {
           <label htmlFor="recipePreparation">preparation</label>
         </div>
 
-        <button className="btn btn-info">Create Recipe</button>
+        <button className="btn btn-info">Update Recipe</button>
       </form>
     </Fragment>
   );

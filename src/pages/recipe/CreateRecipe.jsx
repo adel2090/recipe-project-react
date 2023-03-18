@@ -1,13 +1,11 @@
-import axios from "axios";
 import { useState } from "react";
 import { Fragment } from "react";
 import validate from "../../validation/validation";
 import recipeSchema from "../../validation/recipe.validation";
-// import cardSchema from "validation/card.validation";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import { createRecipe } from "../../services/recipe.services";
-// import cardService from "../services/cardService";
+
 //===============================================================================
 const CreateRecipe = () => {
   const history = useHistory();
@@ -32,7 +30,7 @@ const CreateRecipe = () => {
 
   const handleCreateRecipeSubmit = async (ev) => {
     ev.preventDefault();
-    //if (!userInputRecipe.image) delete userInputRecipe.url;
+   
     //validation
     const { error } = validate(userInputRecipe, recipeSchema);
     console.log("error validation:", { error });
@@ -66,7 +64,7 @@ const CreateRecipe = () => {
         progress: undefined,
         theme: "colored",
       });
-      history.push("/");
+      history.push("/recipes");
     } catch (error) {
       toast.error("Create Recipe is failed", {
         position: "top-center",
@@ -80,24 +78,7 @@ const CreateRecipe = () => {
       });
     }
 
-    // await creatcardfun({userInputCard}).then((res) => console.log("created card", res))
-    // .catch((err) => console.log("error creat card", err));
-    // axios
-    //   .post("/cards/", userInputCard)
-    //   .then((res) => {
-    //     toast.success("A new account is opened!", {
-    //       position: "top-center",
-    //       autoClose: 5000,
-    //       hideProgressBar: false,
-    //       closeOnClick: true,
-    //       pauseOnHover: true,
-    //       draggable: true,
-    //       progress: undefined,
-    //       theme: "colored",
-    //     });
-    //     history.push("/cardspage");
-    //   })
-    //   .catch((err) => console.log("error creat card", err));
+    
   };
 
   return (

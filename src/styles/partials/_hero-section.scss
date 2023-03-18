@@ -4,13 +4,14 @@
     }
     .gallery{
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3,1fr);
         gap: 1.75vw;
         .custom-image{
             border-radius: 3px;
-            overflow: hidden;
+            // overflow: hidden;
             transform: scale(0);
             opacity: 0;
+            // transform: scale(0.1);
             animation: getAnimationDuration(.5s) popOut forwards;
             &:nth-child(2){
                 animation-delay: .1s;

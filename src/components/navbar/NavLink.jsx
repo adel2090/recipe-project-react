@@ -1,8 +1,11 @@
 import { NavLink } from "react-router-dom";
+
 const NavBarLink = ({ link, label }) => {
   return (
-    <li className="nav-item m-3">
-      <NavLink
+    
+    <div className="a">
+
+       <NavLink
         to={link}
         activeStyle={{
           color: "red",
@@ -10,7 +13,17 @@ const NavBarLink = ({ link, label }) => {
       >
         {label}
       </NavLink>
-    </li>
+    </div>
+    // <li className="nav-item m-3">
+    //   <NavLink
+    //     to={link}
+    //     activeStyle={{
+    //       color: "red",
+    //     }}
+    //   >
+    //     {label}
+    //   </NavLink>
+    // </li>
   );
 };
 

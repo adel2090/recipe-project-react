@@ -1,10 +1,10 @@
+
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import "./styles/index.scss";
-//---------------------------------------------------------
+
+
 import { Provider } from "react-redux";
 import store from "./store/index";
 import { BrowserRouter } from "react-router-dom";
@@ -16,6 +16,8 @@ import "react-toastify/dist/ReactToastify.css";
 // // axios
 import axios from "axios";
 import { config } from "@fortawesome/fontawesome-svg-core";
+
+import "./styles/index.scss";
 /**config axios */
 //axios.defaults.baseURL = "http://localhost:3000/api";
 axios.defaults.baseURL = `${process.env.REACT_APP_DOMAIN}/api`;

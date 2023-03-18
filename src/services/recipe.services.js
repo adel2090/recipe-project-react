@@ -17,26 +17,25 @@ const getMyRecipe = () => {
   return axios.get("/recipes/myRecipes");
 }
 
-
+//create recipe
 const createRecipe = (recipe) => {
   return axios.post("/recipes/", recipe);
 };
 
-// edit card
+// edit recipe
 const editRecipe = (recipe,id) => {
   const recipeId = id;
-  //delete recipe._id;
   return axios.patch(`/recipes/${recipeId}`, recipe);
 };
 
-//delete card
+//delete recipe
 const deleteRecipe = (recipeId) => {
   return axios.delete(`/recipes/${recipeId}`);
 };
 
 ;
 
-//create recipe
+
 
 
 export { getAllRecipe,createRecipe, getMyRecipe, getRecipe, editRecipe, deleteRecipe };

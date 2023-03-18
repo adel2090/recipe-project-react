@@ -9,7 +9,7 @@ const DeleteRecipe = () => {
   useEffect(() => {
     (async () => {
       await deleteRecipe(`${id}`);
-      history.push("/myrecipe");
+      history.push("/myRecipe");
     })();
   }, []);
 

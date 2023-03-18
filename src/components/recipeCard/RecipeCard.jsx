@@ -1,86 +1,53 @@
-import "./RecipeCard.scss";
+import CustomImage from "../CustomImage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faClock,
   faUsers,
-  faStar,
   faHeart,
+  faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
+
 import { Link } from "react-router-dom";
-import { useState } from "react";
-//===============================================
-const RecipeCard = ({
-  img,
-  title,
-  clock,
-  users,
-  numStar,
-  description,
-  alt,
-  id,
-  recipe,
-  onclick,
-}) => {
-  const [isActive, setIsActive] = useState(false);
-  const hanldeSaveOnClick = () => {
-    setIsActive(true);
-    onclick(recipe);
-  };
+import { useSelector } from "react-redux";
+import Favorite from "../../pages/recipe/favourites/Favorite";
+
+//=====================================================
+const RecipeCard = ({ recipe }) => {
+  const logIn = useSelector((state) => state.auth.logIn);
 
   return (
-    <div className="col">
-      <div className="card">
-        <div className="header">
-          <img src={img} className="card-img-top" alt={alt} />
-          <div className="icon">
-          
-            {/* <a href="#">
-              <FontAwesomeIcon icon={faHeart} className="icon-heart" />
-              <i className="fa fa-heart-o" />
-            </a> */}
-          </div>
-        </div>
-        <div className="text">
-          <h1 className="food">{title}</h1>
+    <div className="recipe-card">
+      <CustomImage imgSrc={recipe.recipeImg} pt={"65%"} />
+      <div className="recipe-card-info">
+        {/* name chef */}
+        <div>chef : {recipe.user_id.name}</div>
+
+        <p className="recipe-title">{recipe.recipeTitle}</p>
+        <div className="recipe-time-person">
           <FontAwesomeIcon icon={faClock} className="clock" />
-          {clock}
+          {recipe.recipeClock}
           <FontAwesomeIcon icon={faUsers} className="users" />
-          {users}
-          {/* <i className="fa fa-clock-o"> 15 Mins</i> */}
-          {/* <i className="fa fa-users"> Serves 2</i> */}
-          <div className="stars">
-            <div className="star-group">
-              <a href="#">
-                <FontAwesomeIcon icon={faStar} className="star" />
-                {/* <i className="fa fa-star" /> */}
-              </a>
-              <a href="#">
-                <FontAwesomeIcon icon={faStar} className="star" />
-                {/* <i className="fa fa-star" /> */}
-              </a>
-              <a href="#">
-                <FontAwesomeIcon icon={faStar} className="star" />
-                {/* <i className="fa fa-star" /> */}
-              </a>
-              <a href="#">
-                <FontAwesomeIcon icon={faStar} className="star" />
-                {/* <i className="fa fa-star" /> */}
-              </a>
-              <a href="#">
-                <FontAwesomeIcon icon={faStar} className="star" />
-                {/* <i className="fa fa-star-o" /> */}
-              </a>
+          {recipe.recipeUser}
+        </div>
+
+        <p className="recipe-desc">{recipe.recipeDescription}</p>
+
+        <Link className="view-btn" to={`/recipePage/${recipe._id}`} >
+          <FontAwesomeIcon icon={faPenToSquare} />
+          VIEW RECIPE
+        </Link>
+
+        {/* favorite ****************************************/}
+        {logIn && (
+          <div style={{ width: "85%", margin: "1rem auto" }}>
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+              <Favorite
+                userForm={localStorage.getItem("userId")}
+                recipeInfo={recipe}
+              />
             </div>
           </div>
-          <p className="info">{description}</p>
-        </div>
-        {/* <button className="btn btn-warning"> Let's Cook!</button> */}
-        <Link to={`/recipepage`} className="btn btn-warning">
-          Let's Cook!
-        </Link>
-        {/* <a href="#" className="btn">
-          Let's Cook!
-        </a> */}
+        )}
       </div>
     </div>
   );
